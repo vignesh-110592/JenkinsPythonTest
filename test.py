@@ -18,7 +18,7 @@ if __name__ == "__main__":
     input_docx = "/app/AnschreibenRaw.docx"
     placeholder = "Company_name"  # e.g., Company_name    
     replacement = sys.argv[1]  # e.g., Alten
-    output_docx = "/app/AnschreibenF.docx"
+    output_docx = "/app/Anschreiben.docx"
     print(output_docx)
 
     replace_text_in_doc(input_docx, "Company_name", replacement, output_docx)
