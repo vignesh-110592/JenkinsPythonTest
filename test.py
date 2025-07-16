@@ -1,30 +1,23 @@
 import sys
+import os
 from docx import Document
 
-def replace_text_in_paragraph(paragraph, old_text, new_text):
-    if old_text in paragraph.text:
-        inline = paragraph.runs
-        for i in range(len(inline)):
-            if old_text in inline[i].text:
-                inline[i].text = inline[i].text.replace(old_text, new_text)
-                
-
-def replace_text_in_doc(file_path, old_text, new_text, output_path=None):
+def replace_text_in_doc(file_path, placeholder, new_text, output_path):
     doc = Document(file_path)
-
-    for para in doc.paragraphs:
-        replace_text_in_paragraph(para, old_text, new_text)
-
-
-    output_path = output_path or file_path
+    for paragraph in doc.paragraphs:
+        if placeholder in paragraph.text:
+            paragraph.text = paragraph.text.replace(placeholder, new_text)
     doc.save(output_path)
-    print(f"Text replaced and saved to: {output_path}")
 
 if __name__ == "__main__":
-    file_path = 'AnschreibenRaw.docx'
+    if len(sys.argv) != 4:
+        print("Usage: python test.py <input_docx> <placeholder> <replacement>")
+        sys.exit(1)
 
-    new_company_name = sys.argv[1] if len(sys.argv) > 1 else "World"
-    output_path = 'Anschreiben.docx'
-    output_path = output_path if output_path else None
+    input_docx = sys.argv[1]  # e.g., /app/AnschreibenRaw.docx
+    placeholder = sys.argv[2]  # e.g., Company_name
+    replacement = sys.argv[3]  # e.g., Google
+    output_docx = os.path.join(os.path.dirname(input_docx), "AnschreibenFinal.docx")
 
-    replace_text_in_doc(file_path, 'Company_name', new_company_name, output_path)
+    replace_text_in_doc(input_docx, placeholder, replacement, output_docx)
+    print("Replacement complete. Output saved to", output_docx)
