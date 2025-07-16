@@ -14,9 +14,7 @@ pipeline {
         }
 
         stage('Build Docker Image') {
-            steps{
-                Set-ItemProperty -Path "C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\test\\Anschreiben.docx" -Name IsReadOnly -Value $false
-            }
+            
             steps {
                 dir("${WORKDIR}") {
                     bat "docker build -t %IMAGE_NAME% ."
