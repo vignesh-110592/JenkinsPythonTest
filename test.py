@@ -15,10 +15,11 @@ if __name__ == "__main__":
         print("Usage: python test.py <new_company_name>")
         sys.exit(1)
     print(len(sys.argv))
-    input_docx = "/AnschreibenRaw.docx"
+    input_docx = "/app/AnschreibenRaw.docx"
     placeholder = "Company_name"  # e.g., Company_name    
     replacement = sys.argv[1]  # e.g., Alten
     output_docx = os.path.join(os.path.dirname(input_docx), "Anschreiben.docx")
+    print(output_docx)
 
     replace_text_in_doc(input_docx, "Company_name", replacement, output_docx)
     print("Replacement complete. Output saved to", output_docx)
