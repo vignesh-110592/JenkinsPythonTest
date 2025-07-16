@@ -32,7 +32,7 @@ def verify_date_in_doc(doc_path):
     for text in texts:
         found_date = find_date_in_text(text)
         if found_date:
-            print(f"Found date in document: {found_date}")
+            print(f"Found date in the document: {found_date}")
             if found_date == today:
                 print("PASS: Date is updated correctly.")
                 return True
