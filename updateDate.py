@@ -3,13 +3,16 @@ from datetime import datetime
 import os
 import sys
 
-def update_date_placeholder(source_workspace, destination_workspace, filename="Anschreiben.docx", placeholder="__DATE__"):
+def update_date_placeholder(source_workspace, destination_workspace, filename="AnschreibenRaw.docx", placeholder="__DATE__"):
     # Format today's date
     today = datetime.today().strftime("%d.%m.%Y")
+    print(today)
 
     # Build file paths
     input_path = os.path.join(source_workspace, filename)
     output_path = os.path.join(destination_workspace, filename)
+    print(f"Input file: {input_path}"
+          f"\nOutput file: {output_path}")
 
     # Load the document
     doc = Document(input_path)
@@ -19,6 +22,7 @@ def update_date_placeholder(source_workspace, destination_workspace, filename="A
         for run in para.runs:
             if placeholder in run.text:
                 run.text = run.text.replace(placeholder, today)
+                print(f"Replaced '{placeholder}' with '{today}' in paragraph.")
 
 
     # Ensure destination directory exists
