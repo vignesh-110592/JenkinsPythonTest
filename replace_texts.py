@@ -22,7 +22,7 @@ if __name__ == "__main__":
     position_name = sys.argv[2]
     person_name = sys.argv[3]
     
-    input_doc = "Anschreiben.docx"
+    input_doc = "AnschreibenRaw.docx"
     temp_doc = "Anschreiben_Temp.docx"
     final_doc = "Anschreiben_Vignesh.docx"
 
