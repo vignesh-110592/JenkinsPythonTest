@@ -10,6 +10,7 @@ def replace_yesterday_with_today(doc_path):
     def replace_in_runs(runs):
         for run in runs:
             if yesterday in run.text:
+                print("found")
                 run.text = run.text.replace(yesterday, today)
 
     # Replace in normal paragraphs
