@@ -29,7 +29,7 @@ if __name__ == "__main__":
     file_path = 'AnschreibenRaw.docx'
 
     new_company_name = sys.argv[1] if len(sys.argv) > 1 else "World"
-    output_path = 'S:/DevOps/JenkinsPythonTest/Anschreiben.docx'
+    output_path = 'Anschreiben.docx'
     output_path = output_path if output_path else None
 
     replace_text_in_doc(file_path, 'Company_name', new_company_name, output_path)
