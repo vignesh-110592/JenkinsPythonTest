@@ -10,17 +10,19 @@ def replace_text_in_doc(file_path, placeholder, new_text, output_path):
     doc.save(output_path)
 
 if __name__ == "__main__":
-    if len(sys.argv) != 3:
+    if len(sys.argv) != 4:
         print("Usage: python test.py <new_company_name>")
         sys.exit(1)
     input_docx = "/app/AnschreibenRaw.docx"
-    placeholder = "Company_name"  # e.g., Company_name    
+    search_text = ["Company_name", "Position_name", "Person_name"]  # e.g., Company_name
+    #placeholder = "Company_name"  # e.g., Company_name
     replacement = sys.argv[1]  # e.g., Alten
-    output_docx = "/app/Anschreiben_Vignesh.docx"
-    position_name = sys.argv[2]
-    for arg in range(len(sys.argv)-1):
-        print(sys.argv[arg+1])
     
+    position_name = sys.argv[2]
+    person_name = sys.argv[3]
+    output_docx = "/app/Anschreiben_Vignesh.docx"
+    for arg in range(len(sys.argv)-1):
+        replace_text_in_doc(input_docx, search_text[arg], sys.argv[arg+1], output_docx)
 
-    replace_text_in_doc(input_docx, "Company_name", replacement, output_docx)
+    #replace_text_in_doc(input_docx, "Company_name", replacement, output_docx)
     print("Replacement complete. Output saved to", output_docx)
