@@ -3,18 +3,15 @@ from datetime import datetime
 import os
 import sys
 
-def update_date_placeholder(source_workspace, destination_workspace, filename="AnschreibenRaw.docx", placeholder="__DATE__"):
-    # Format today's date
+def update_date_placeholder(source_dir, destination_dir, filename="AnschreibenRaw.docx", placeholder="__DATE__"):
     today = datetime.today().strftime("%d.%m.%Y")
-    print(today)
 
-    # Build file paths
-    input_path = os.path.join(source_workspace, filename)
-    output_path = os.path.join(destination_workspace, filename)
-    print(f"Input file: {input_path}"
-          f"\nOutput file: {output_path}")
+    input_path = os.path.join(source_dir, filename)
+    output_path = os.path.join(destination_dir, filename)
 
-    # Load the document
+    if not os.path.exists(input_path):
+        raise FileNotFoundError(f"Input file does not exist: {input_path}")
+
     doc = Document(input_path)
 
     # Replace in paragraphs
@@ -22,19 +19,21 @@ def update_date_placeholder(source_workspace, destination_workspace, filename="A
         for run in para.runs:
             if placeholder in run.text:
                 run.text = run.text.replace(placeholder, today)
-                print(f"Replaced '{placeholder}' with '{today}' in paragraph.")
 
+    # Replace in tables
+    for table in doc.tables:
+        for row in table.rows:
+            for cell in row.cells:
+                for para in cell.paragraphs:
+                    for run in para.runs:
+                        if placeholder in run.text:
+                            run.text = run.text.replace(placeholder, today)
 
-    # Ensure destination directory exists
-    os.makedirs(destination_workspace, exist_ok=True)
-
-    # Save the modified document
+    os.makedirs(destination_dir, exist_ok=True)
     doc.save(output_path)
     print(f"Updated file saved to: {output_path}")
 
-# Example usage with hardcoded paths (you can change them via Jenkins env vars or params)
 if __name__ == "__main__":
-    source_workspace = os.environ.get("SOURCE_WORKSPACE", "C:/ProgramData/Jenkins/.jenkins/workspace/UpdateDateOnResumeAndCoverLetter")
-    destination_workspace = os.environ.get("DEST_WORKSPACE", "C:/ProgramData/Jenkins/.jenkins/workspace/test")
-    
-    update_date_placeholder(source_workspace, destination_workspace)
+    source_dir = "/source"
+    destination_dir = "/dest"
+    update_date_placeholder(source_dir, destination_dir)
