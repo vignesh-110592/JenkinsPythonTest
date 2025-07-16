@@ -16,7 +16,7 @@ if __name__ == "__main__":
 
     input_docx = sys.argv[1]  # e.g., /app/AnschreibenRaw.docx
     placeholder = sys.argv[2]  # e.g., Company_name
-    replacement = sys.argv[3]  # e.g., Google
+    replacement = sys.argv[3]  # e.g., Googl
     output_docx = os.path.join(os.path.dirname(input_docx), "AnschreibenFinal.docx")
 
     replace_text_in_doc(input_docx, placeholder, replacement, output_docx)
