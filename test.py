@@ -10,8 +10,8 @@ def replace_text_in_doc(file_path, placeholder, new_text, output_path):
     doc.save(output_path)
 
 if __name__ == "__main__":
-    if len(sys.argv) != 4:
-        print("Usage: python test.py <input_docx> <placeholder> <replacement>")
+    if len(sys.argv) != 1:
+        print("Usage: python test.py <new_company_name>")
         sys.exit(1)
 
     input_docx = "/app/AnschreibenRaw.docx"
