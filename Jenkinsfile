@@ -28,7 +28,7 @@ pipeline {
                         -v "%WORKDIR%:/app" ^
                         -w /app ^
                         %IMAGE_NAME% ^
-                        python test.py Google
+                        python test.py /app/AnschreibenRaw.docx Company_name Google
                 """
             }
         }
