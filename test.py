@@ -1,3 +1,4 @@
+import sys
 from docx import Document
 
 def replace_text_in_paragraph(paragraph, old_text, new_text):
@@ -27,7 +28,7 @@ def replace_text_in_doc(file_path, old_text, new_text, output_path=None):
 if __name__ == "__main__":
     file_path = 'S:/DevOps/JenkinsPipeline/AnschreibenRaw.docx'
 
-    new_company_name = input("Enter the new company name: ").strip()
+    new_company_name = sys.argv[1] if len(sys.argv) > 1 else "World"
     output_path = 'S:/DevOps/JenkinsPipeline/Anschreiben.docx'
     output_path = output_path if output_path else None
 
