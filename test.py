@@ -15,11 +15,6 @@ def replace_text_in_doc(file_path, old_text, new_text, output_path=None):
     for para in doc.paragraphs:
         replace_text_in_paragraph(para, old_text, new_text)
 
-    for table in doc.tables:
-        for row in table.rows:
-            for cell in row.cells:
-                for para in cell.paragraphs:
-                    replace_text_in_paragraph(para, old_text, new_text)
 
     output_path = output_path or file_path
     doc.save(output_path)
