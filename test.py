@@ -15,9 +15,9 @@ if __name__ == "__main__":
         sys.exit(1)
 
     input_docx = "/app/AnschreibenRaw.docx"
-    placeholder = sys.argv[2]  # e.g., Company_name
-    replacement = sys.argv[3]  # e.g., Alten
-    output_docx = os.path.join(os.path.dirname(input_docx), "AnschreibenFinal.docx")
+    placeholder = sys.argv[1]  # e.g., Company_name
+    replacement = sys.argv[2]  # e.g., Alten
+    output_docx = os.path.join(os.path.dirname(input_docx), "Anschreiben.docx")
 
     replace_text_in_doc(input_docx, placeholder, replacement, output_docx)
     print("Replacement complete. Output saved to", output_docx)
