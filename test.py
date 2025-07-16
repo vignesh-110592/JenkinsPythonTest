@@ -26,7 +26,7 @@ def replace_text_in_doc(file_path, old_text, new_text, output_path=None):
     print(f"Text replaced and saved to: {output_path}")
 
 if __name__ == "__main__":
-    file_path = 'S:/DevOps/JenkinsPythonTest/AnschreibenRaw.docx'
+    file_path = 'AnschreibenRaw.docx'
 
     new_company_name = sys.argv[1] if len(sys.argv) > 1 else "World"
     output_path = 'S:/DevOps/JenkinsPythonTest/Anschreiben.docx'
