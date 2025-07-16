@@ -13,7 +13,7 @@ def replace_text_in_doc(input_path, replacements, output_path):
     doc.save(output_path)
 
 if __name__ == "__main__":
-    if len(sys.argv) != 5:
+    if len(sys.argv) != 4:
         print("Usage: python replace_texts.py <CompanyName> <PositionName> <PersonName>")
         sys.exit(1)
 
