@@ -14,8 +14,8 @@ if __name__ == "__main__":
         print(len(sys.argv))
         print("Usage: python test.py <new_company_name>")
         sys.exit(1)
-
-    input_docx = "/app/AnschreibenRaw.docx"
+    print(len(sys.argv))
+    input_docx = "/AnschreibenRaw.docx"
     placeholder = "Company_name"  # e.g., Company_name    
     replacement = sys.argv[1]  # e.g., Alten
     output_docx = os.path.join(os.path.dirname(input_docx), "Anschreiben.docx")
