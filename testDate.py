@@ -1,55 +1,39 @@
 from docx import Document
 from datetime import datetime
-import re
-import sys
 import os
+import sys
 
-def find_date_in_text(text):
-    # Regex to find date in dd.mm.yyyy format
-    match = re.search(r"\b\d{2}\.\d{2}\.\d{4}\b", text)
-    return match.group(0) if match else None
-
-def get_all_text(doc):
-    texts = []
-
-    # Collect paragraphs
-    for para in doc.paragraphs:
-        texts.append(para.text)
-
-
-    return texts
-
-def verify_date_in_doc(doc_path):
-    if not os.path.exists(doc_path):
-        print(f"FAIL: File not found: {doc_path}")
+def verify_date_in_docx(file_path, expected_date):
+    try:
+        doc = Document(file_path)
+        for paragraph in doc.paragraphs:
+            if expected_date in paragraph.text:
+                print(f"✅ Date '{expected_date}' found in {os.path.basename(file_path)}")
+                return True
+        print(f"❌ Date '{expected_date}' NOT found in {os.path.basename(file_path)}")
+        return False
+    except Exception as e:
+        print(f"❌ Error reading {file_path}: {e}")
         return False
 
-    doc = Document(doc_path)
-    texts = get_all_text(doc)
+def verify_dates_in_documents(dest_dir, filenames, expected_date):
+    all_passed = True
+    for filename in filenames:
+        file_path = os.path.join(dest_dir, filename)
+        if not os.path.exists(file_path):
+            print(f"❌ File not found: {file_path}")
+            all_passed = False
+            continue
+        if not verify_date_in_docx(file_path, expected_date):
+            all_passed = False
+    return all_passed
 
-    today = datetime.today().strftime("%d.%m.%Y")
+# --- CONFIGURATION ---
+destination_workspace = "/dest"  # Docker-mounted path to Jenkins 'test' workspace
+files_to_verify = ["AnschreibenRaw.docx", "LebenslaufRaw.docx"]
+expected_date = datetime.now().strftime("%d.%m.%Y")
 
-    for text in texts:
-        found_date = find_date_in_text(text)
-        if found_date:
-            print(f"Found date in the document: {found_date}")
-            if found_date == today:
-                print("PASS: Date is updated correctly.")
-                return True
-            else:
-                print(f"FAIL: Date '{found_date}' does not match today's date '{today}'.")
-                return False
+success = verify_dates_in_documents(destination_workspace, files_to_verify, expected_date)
 
-    print("FAIL: No date in dd.mm.yyyy format found in document.")
-    return False
-
-if __name__ == "__main__":
-    # Adjust path to your destination file here
-    file_path = "/dest/AnschreibenRaw.docx"
-
-    success = verify_date_in_doc(file_path)
-
-    if success:
-        sys.exit(0)  # Success exit code for Jenkins
-    else:
-        sys.exit(1)  # Failure exit code for Jenkins
+if not success:
+    sys.exit(1)  # Make Jenkins pipeline fail if any verification fails

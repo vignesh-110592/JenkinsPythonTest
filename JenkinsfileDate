@@ -26,7 +26,7 @@ pipeline {
             steps {
                 bat """
                     docker run --rm ^
-                        -v "C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\UpdateDateOnResumeAndCoverLetter:/app" ^
+                        -v "C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\UpdateDateOnResumeAndCoverLetter:/source" ^
                         -v "C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\test:/dest" ^
                         -w /app ^
                         %IMAGE_NAME% ^
