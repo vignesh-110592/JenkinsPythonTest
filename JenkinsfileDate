@@ -22,7 +22,7 @@ pipeline {
             }
         }
 
-        stage('Run Python Script in Container') {
+        stage('Update the current date in documents') {
             steps {
                 bat """
                     docker run --rm ^
@@ -31,6 +31,17 @@ pipeline {
                         -w /app ^
                         %IMAGE_NAME% ^
                         python updateDate.py
+                """
+            }
+        }
+        stage('test if the date is updated') {
+            steps {
+                bat """
+                    docker run --rm ^
+                        -v "C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\test:/dest" ^
+                        -w /app ^
+                        %IMAGE_NAME% ^
+                        python testDate.py
                 """
             }
         }
