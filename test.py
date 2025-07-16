@@ -18,7 +18,7 @@ if __name__ == "__main__":
     replacement = sys.argv[1]  # e.g., Alten
     output_docx = "/app/Anschreiben_Vignesh.docx"
     position_name = sys.argv[2]
-    for arg in range(len(sys.argv))-1:
+    for arg in range(len(sys.argv)-1):
         print(sys.argv[arg+1])
     
 
