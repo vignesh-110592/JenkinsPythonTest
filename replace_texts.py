@@ -5,10 +5,15 @@ import os
 def replace_text_in_doc(input_path, replacements, output_path):
     doc = Document(input_path)
 
+    def replace_in_runs(runs, replacements):
+        for run in runs:
+            for placeholder, new_text in replacements.items():
+                if placeholder in run.text:
+                    run.text = run.text.replace(placeholder, new_text)
+
+    # Replace in paragraphs
     for para in doc.paragraphs:
-        for placeholder, new_text in replacements.items():
-            if placeholder in para.text:
-                para.text = para.text.replace(placeholder, new_text)
+        replace_in_runs(para.runs, replacements)
 
     doc.save(output_path)
 
