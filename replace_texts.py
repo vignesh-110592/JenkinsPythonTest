@@ -28,9 +28,9 @@ if __name__ == "__main__":
 
     # Define your placeholder-replacement mapping
     replacements = {
-        "Company_name": "Company_name",
-        "Position_name": "Position_name",
-        "Person_name": "Person_name",
+        "Company_name": company_name,
+        "Position_name": position_name,
+        "Person_name": person_name,
     }
 
     replace_text_in_doc(input_doc, replacements, temp_doc)
