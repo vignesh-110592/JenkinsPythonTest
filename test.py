@@ -17,6 +17,9 @@ if __name__ == "__main__":
     placeholder = "Company_name"  # e.g., Company_name    
     replacement = sys.argv[1]  # e.g., Alten
     output_docx = "/app/Anschreiben_Vignesh.docx"
+    position_name = sys.argv[2]
+    for arg in range(len(sys.argv)):
+        print(sys.argv[arg])
     
 
     replace_text_in_doc(input_docx, "Company_name", replacement, output_docx)
