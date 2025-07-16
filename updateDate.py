@@ -3,8 +3,9 @@ from datetime import datetime, timedelta
 
 def replace_yesterday_with_today(doc_path):
     today = datetime.today().strftime("%d.%m.%Y")
+    print(today)
     yesterday = (datetime.today() - timedelta(days=1)).strftime("%d.%m.%Y")
-
+    print(yesterday)
     doc = Document(doc_path)
 
     def replace_in_runs(runs):
