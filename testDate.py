@@ -45,7 +45,7 @@ def verify_date_in_doc(doc_path):
 
 if __name__ == "__main__":
     # Adjust path to your destination file here
-    file_path = "/app/AnschreibenRaw.docx"
+    file_path = "/dest/AnschreibenRaw.docx"
 
     success = verify_date_in_doc(file_path)
 
