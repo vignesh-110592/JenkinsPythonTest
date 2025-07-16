@@ -1,26 +1,36 @@
 from docx import Document
-from datetime import datetime, timedelta
+from datetime import datetime
+import os
+import sys
 
-def replace_yesterday_with_today(doc_path):
+def update_date_placeholder(source_workspace, destination_workspace, filename="Anschreiben.docx", placeholder="__DATE__"):
+    # Format today's date
     today = datetime.today().strftime("%d.%m.%Y")
-    print(today)
-    yesterday = (datetime.today() - timedelta(days=1)).strftime("%d.%m.%Y")
-    print(yesterday)
-    doc = Document(doc_path)
 
-    def replace_in_runs(runs):
-        for run in runs:
-            if yesterday in run.text:
-                print("found")
-                run.text = run.text.replace(yesterday, today)
+    # Build file paths
+    input_path = os.path.join(source_workspace, filename)
+    output_path = os.path.join(destination_workspace, filename)
 
-    # Replace in normal paragraphs
+    # Load the document
+    doc = Document(input_path)
+
+    # Replace in paragraphs
     for para in doc.paragraphs:
-        replace_in_runs(para.runs)
+        for run in para.runs:
+            if placeholder in run.text:
+                run.text = run.text.replace(placeholder, today)
 
 
-    # Overwrite the same file
-    doc.save(doc_path)
+    # Ensure destination directory exists
+    os.makedirs(destination_workspace, exist_ok=True)
 
-# Example usage
-replace_yesterday_with_today("AnschreibenRaw.docx")
+    # Save the modified document
+    doc.save(output_path)
+    print(f"Updated file saved to: {output_path}")
+
+# Example usage with hardcoded paths (you can change them via Jenkins env vars or params)
+if __name__ == "__main__":
+    source_workspace = os.environ.get("SOURCE_WORKSPACE", "C:/ProgramData/Jenkins/.jenkins/workspace/UpdateDateOnResumeAndCoverLetter")
+    destination_workspace = os.environ.get("DEST_WORKSPACE", "C:/ProgramData/Jenkins/.jenkins/workspace/test")
+    
+    update_date_placeholder(source_workspace, destination_workspace)
