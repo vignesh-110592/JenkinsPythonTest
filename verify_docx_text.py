@@ -6,6 +6,7 @@ from datetime import datetime
 def verify_placeholders(doc, expected_values):
     text = "\n".join([para.text for para in doc.paragraphs])
     for key, val in expected_values.items():
+        print(f"Verifying '{key}' with expected value '{val}' in document.")
         if val not in text:
             print(f"Verification failed: '{val}' not found.")
             return False
