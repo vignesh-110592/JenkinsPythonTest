@@ -1,0 +1,65 @@
+pipeline {
+    agent any
+
+    environment {
+        WORKSPACE_DIR = 'C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\test'
+        IMAGE_NAME = 'my-python-script'
+    }
+
+    stages {
+
+        stage('Checkout SCM') {
+            steps {
+                checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/vignesh-110592/JenkinsPythonTest.git']])
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                dir("${env.WORKSPACE_DIR}") {
+                    script {
+                        bat "docker build -t ${IMAGE_NAME} ."
+                    }
+                }
+            }
+        }
+
+        stage('Update DOCX Files') {
+            steps {
+                script {
+                    bat """
+                        docker run --rm ^
+                            -v "${WORKSPACE_DIR}:/app" ^
+                            -w /app ^
+                            ${IMAGE_NAME} ^
+                            python replace_docx_text.py
+                    """
+                }
+            }
+        }
+
+        stage('Verify Updates') {
+            steps {
+                script {
+                    bat """
+                        docker run --rm ^
+                            -v "${WORKSPACE_DIR}:/app" ^
+                            -w /app ^
+                            ${IMAGE_NAME} ^
+                            python verify_docx_text.py
+                    """
+                }
+            }
+        }
+
+        stage('Convert DOCX to PDF') {
+            steps {
+                dir("${env.WORKSPACE_DIR}") {
+                    script {
+                        bat "python convert_docx_to_pdf.py"
+                    }
+                }
+            }
+        }
+    }
+}
