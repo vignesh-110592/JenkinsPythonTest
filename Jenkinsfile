@@ -29,7 +29,7 @@ pipeline {
                         -v "C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\test:/app" ^
                         -w /app ^
                         %IMAGE_NAME% ^
-                        python replace_texts.py "Alten GmbH" "Cloud Engineer" "Frau Saaral"
+                        python replace_texts.py "Ferchau GmbH" "DevOps Engineer" "Frau Sundari"
                 """
             }
         }
