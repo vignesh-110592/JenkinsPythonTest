@@ -1,8 +1,14 @@
+# Base image
 FROM python:3.11-slim
 
+# Set working directory
 WORKDIR /app
 
-COPY updateDate.py .
+# Copy scripts into container
+COPY *.py /app/
 
-RUN pip install python-docx
-RUN pip install docx2pdf
+# Install dependencies
+RUN pip install --no-cache-dir python-docx docx2pdf
+
+# Default command (can be overridden in `docker run`)
+CMD ["python", "replace_docx_text.py"]
