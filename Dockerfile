@@ -5,3 +5,4 @@ WORKDIR /app
 COPY updateDate.py .
 
 RUN pip install python-docx
+RUN pip install docx2pdf

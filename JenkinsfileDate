@@ -46,5 +46,12 @@ pipeline {
                 """
             }
         }
+        stages {
+        stage('Convert to PDF') {
+            steps {
+                bat 'python C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\UpdateDateOnResumeAndCoverLetter\\pdfConversion.py'
+            }
+        }
+    }
     }
 }
