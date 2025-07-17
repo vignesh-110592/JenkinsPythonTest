@@ -1,46 +1,51 @@
-from docx import Document
-from datetime import datetime
+import sys
 import os
-import shutil
+from datetime import datetime
+from docx import Document
 
-# Constants
-PLACEHOLDER_DATE = "{{Date}}"
-PLACEHOLDER_COMPANY = "{{Company_name}}"
-PLACEHOLDER_PERSON = "{{Person_name}}"
-PLACEHOLDER_POSITION = "{{Position_name}}"
-
-today = datetime.now().strftime("%d.%m.%Y")
-
-def replace_placeholders(file_path, replacements, output_path):
-    doc = Document(file_path)
+def replace_placeholders(doc, replacements):
     for para in doc.paragraphs:
         for key, val in replacements.items():
             if key in para.text:
-                for run in para.runs:
-                    if key in run.text:
-                        run.text = run.text.replace(key, val)
-    doc.save(output_path)
+                inline = para.runs
+                for i in range(len(inline)):
+                    if key in inline[i].text:
+                        inline[i].text = inline[i].text.replace(key, val)
 
-def main():
-    workspace = os.getenv("WORKSPACE", "/app")
-    input_resume = os.path.join(workspace, "LebenslaufRaw.docx")
-    input_cover = os.path.join(workspace, "AnschreibenRaw.docx")
-    output_resume = os.path.join(workspace, "Lebenslauf.docx")
-    output_cover = os.path.join(workspace, "Anschreiben_Vignesh.docx")
-
-    # Replacements
-    replace_placeholders(input_resume, {
-        PLACEHOLDER_DATE: today
-    }, output_resume)
-
-    replace_placeholders(input_cover, {
-        PLACEHOLDER_DATE: today,
-        PLACEHOLDER_COMPANY: "Alten GmbH",
-        PLACEHOLDER_PERSON: "John Doe",
-        PLACEHOLDER_POSITION: "Software Engineer"
-    }, output_cover)
-
-    print("✅ DOCX placeholders updated.")
+def process_file(input_filename, output_filename, replacements):
+    doc = Document(input_filename)
+    replace_placeholders(doc, replacements)
+    doc.save(output_filename)
 
 if __name__ == "__main__":
-    main()
+    if len(sys.argv) != 4:
+        print("Usage: python replace_docx_text.py <CompanyName> <PersonName> <PositionName>")
+        sys.exit(1)
+
+    company_name = sys.argv[1]
+    person_name = sys.argv[2]
+    position_name = sys.argv[3]
+
+    current_date = datetime.today().strftime("%d.%m.%Y")
+
+    replacements_anschreiben = {
+        "__DATE__": current_date,
+        "Company_name": company_name,
+        "Person_name": person_name,
+        "Position_name": position_name
+    }
+
+    replacements_lebenslauf = {
+        "__DATE__": current_date
+    }
+
+    base_path = os.getcwd()
+    process_file(os.path.join(base_path, "AnschreibenRaw.docx"),
+                 os.path.join(base_path, "Anschreiben.docx"),
+                 replacements_anschreiben)
+
+    process_file(os.path.join(base_path, "LebenslaufRaw.docx"),
+                 os.path.join(base_path, "Lebenslauf.docx"),
+                 replacements_lebenslauf)
+
+    print("Replacement complete.")

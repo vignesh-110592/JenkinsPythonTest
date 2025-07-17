@@ -1,37 +1,47 @@
-from docx import Document
+import sys
 import os
+from docx import Document
+from datetime import datetime
 
-def verify_placeholders(file_path, expected_values):
-    doc = Document(file_path)
-    text = "\n".join([p.text for p in doc.paragraphs])
+def verify_placeholders(doc, expected_values):
+    text = "\n".join([para.text for para in doc.paragraphs])
     for key, val in expected_values.items():
         if val not in text:
-            print(f"❌ Verification failed: {val} not found in {file_path}")
+            print(f"Verification failed: '{val}' not found.")
             return False
-    print(f"✅ Verified: {file_path}")
     return True
 
-def main():
-    workspace = os.getenv("WORKSPACE", "/app")
-    resume = os.path.join(workspace, "Lebenslauf.docx")
-    cover = os.path.join(workspace, "Anschreiben_Vignesh.docx")
-
-    from datetime import datetime
-    today = datetime.now().strftime("%d.%m.%Y")
-
-    all_ok = True
-    all_ok &= verify_placeholders(resume, {
-        "Date": today
-    })
-    all_ok &= verify_placeholders(cover, {
-        "Date": today,
-        "Company_name": "Alten GmbH",
-        "Person_name": "John Doe",
-        "Position_name": "Software Engineer"
-    })
-
-    if not all_ok:
-        raise Exception("❌ Verification failed.")
-
 if __name__ == "__main__":
-    main()
+    if len(sys.argv) != 4:
+        print("Usage: python verify_docx_text.py <CompanyName> <PersonName> <PositionName>")
+        sys.exit(1)
+
+    company_name = sys.argv[1]
+    person_name = sys.argv[2]
+    position_name = sys.argv[3]
+
+    current_date = datetime.today().strftime("%d.%m.%Y")
+
+    expected_anschreiben = {
+        "__DATE__": current_date,
+        "Company_name": company_name,
+        "Person_name": person_name,
+        "Position_name": position_name
+    }
+
+    expected_lebenslauf = {
+        "__DATE__": current_date
+    }
+
+    base_path = os.getcwd()
+
+    doc1 = Document(os.path.join(base_path, "Anschreiben.docx"))
+    doc2 = Document(os.path.join(base_path, "Lebenslauf.docx"))
+
+    if not verify_placeholders(doc1, expected_anschreiben):
+        sys.exit(1)
+
+    if not verify_placeholders(doc2, expected_lebenslauf):
+        sys.exit(1)
+
+    print("Verification passed.")

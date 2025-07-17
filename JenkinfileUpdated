@@ -1,13 +1,18 @@
 pipeline {
     agent any
 
+    parameters {
+        string(name: 'Company_name', defaultValue: 'Alten GmbH', description: 'Company Name')
+        string(name: 'Person_name', defaultValue: 'John Doe', description: 'Person Name')
+        string(name: 'Position_name', defaultValue: 'Software Engineer', description: 'Position')
+    }
+
     environment {
-        WORKSPACE_DIR = 'C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\test'
         IMAGE_NAME = 'my-python-script'
+        WORKSPACE_DIR = "${env.WORKSPACE}"
     }
 
     stages {
-
         stage('Checkout SCM') {
             steps {
                 checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/vignesh-110592/JenkinsPythonTest.git']])
@@ -16,10 +21,10 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-                dir("${env.WORKSPACE_DIR}") {
-                    script {
-                        bat "docker build -t ${IMAGE_NAME} ."
-                    }
+                script {
+                    bat """
+                        docker build -t %IMAGE_NAME% .
+                    """
                 }
             }
         }
@@ -29,10 +34,10 @@ pipeline {
                 script {
                     bat """
                         docker run --rm ^
-                            -v "${WORKSPACE_DIR}:/app" ^
+                            -v "%WORKSPACE_DIR%:/app" ^
                             -w /app ^
-                            ${IMAGE_NAME} ^
-                            python replace_docx_text.py
+                            %IMAGE_NAME% ^
+                            python replace_docx_text.py "%COMPANY_NAME%" "%PERSON_NAME%" "%POSITION_NAME%"
                     """
                 }
             }
@@ -43,21 +48,25 @@ pipeline {
                 script {
                     bat """
                         docker run --rm ^
-                            -v "${WORKSPACE_DIR}:/app" ^
+                            -v "%WORKSPACE_DIR%:/app" ^
                             -w /app ^
-                            ${IMAGE_NAME} ^
-                            python verify_docx_text.py
+                            %IMAGE_NAME% ^
+                            python verify_docx_text.py "%COMPANY_NAME%" "%PERSON_NAME%" "%POSITION_NAME%"
                     """
                 }
             }
         }
 
-        stage('Convert DOCX to PDF') {
+        stage('Convert to PDF') {
             steps {
-                dir("${env.WORKSPACE_DIR}") {
-                    script {
-                        bat "python convert_docx_to_pdf.py"
-                    }
+                script {
+                    bat """
+                        docker run --rm ^
+                            -v "%WORKSPACE_DIR%:/app" ^
+                            -w /app ^
+                            %IMAGE_NAME% ^
+                            python convert_docx_to_pdf.py
+                    """
                 }
             }
         }
