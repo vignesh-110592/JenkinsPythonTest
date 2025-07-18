@@ -10,7 +10,7 @@ def replace_placeholders(doc, replacements):
                 inline = para.runs
                 for i in range(len(inline)):
                     if key in inline[i].text:
-                        print(f"Replacing '{key}' with '{val}' in paragraph: {para.text}")
+                        print(f"Replacing '{key}' with '{val}'")
                         inline[i].text = inline[i].text.replace(key, val)
 
 def process_file(input_filename, output_filename, replacements):
