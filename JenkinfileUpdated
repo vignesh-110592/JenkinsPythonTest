@@ -60,12 +60,21 @@ pipeline {
         stage('Convert to PDF') {
             steps {
                 script {
-                    docker.image('my-python-script').inside {
-                        bat '''
-                        mkdir -p ${PDF_OUTPUT}
-                        python convert_docx_to_pdf.py
+                    bat """
+                        docker run --rm ^
+                            -v "%WORKSPACE_DIR%:/app" ^
+                            -w /app ^
+                            %IMAGE_NAME% ^
+                            python convert_docx_to_pdf.py
+                    """
+                }
+            }
+        }
+    }
+}
+
                         '''
-                    }
+                    
                 }
             }
         }
