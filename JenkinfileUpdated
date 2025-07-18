@@ -3,8 +3,8 @@ pipeline {
 
     parameters {
         string(name: 'Company_name', defaultValue: 'Alten GmbH', description: 'Company Name')
-        string(name: 'Person_name', defaultValue: 'John Doe', description: 'Person Name')
-        string(name: 'Position_name', defaultValue: 'Software Engineer', description: 'Position')
+        string(name: 'Person_name', defaultValue: 'geehrte', description: 'Person Name')
+        string(name: 'Position_name', defaultValue: 'DevOps Engineer', description: 'Position')
     }
 
     environment {
