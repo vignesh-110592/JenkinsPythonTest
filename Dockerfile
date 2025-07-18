@@ -2,10 +2,13 @@
 FROM python:3.11-slim
 
 # Install LibreOffice
-RUN apt-get update && \
-    apt-get install -y libreoffice libreoffice-writer && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y \
+    libreoffice \
+    ttf-mscorefonts-installer \
+    fonts-crosextra-carlito \
+    fonts-crosextra-caladea \
+    fontconfig \
+    && fc-cache -fv
 
 # Install required Python packages
 COPY requirements.txt .
