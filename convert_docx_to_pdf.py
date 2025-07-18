@@ -1,13 +1,10 @@
 from docx2pdf import convert
 import os
 
-sourceAnschreiben = "C:/ProgramData/Jenkins/.jenkins/workspace/test/Anschreiben.docx"
-sourceLebenslauf = "C:/ProgramData/Jenkins/.jenkins/workspace/test/Lebenslauf.docx"
-dest = "C:/ProgramData/Jenkins/.jenkins/workspace/test/pdf_output"
+source = os.path.abspath("Lebenslauf.docx")
+dest = os.path.abspath("Lebenslauf.pdf")
+convert(source, dest)
 
-if not os.path.exists(dest):
-    os.makedirs(dest)
-
-convert(sourceAnschreiben, dest)
-convert(sourceLebenslauf, dest)
-print("✅ Converted to PDF.")
+source = os.path.abspath("Anschreiben.docx")
+dest = os.path.abspath("Anschreiben.pdf")
+convert(source, dest)

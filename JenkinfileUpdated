@@ -61,11 +61,7 @@ pipeline {
             steps {
                 script {
                     bat """
-                        docker run --rm ^
-                            -v "%WORKSPACE_DIR%:/app" ^
-                            -w /app ^
-                            %IMAGE_NAME% ^
-                            python convert_docx_to_pdf.py
+                        python convert_docx_to_pdf.py
                     """
                 }
             }
