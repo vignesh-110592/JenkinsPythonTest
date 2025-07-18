@@ -4,7 +4,7 @@ from docx2pdf import convert
 import os
 
 source_files = ["Anschreiben.docx", "Lebenslauf.docx"]
-output_dir = "pdf_output"
+output_dir = "C:\\Users\\svvav\\Desktop\\Doc"
 
 os.makedirs(output_dir, exist_ok=True)
 
