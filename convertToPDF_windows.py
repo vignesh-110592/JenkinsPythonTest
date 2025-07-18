@@ -10,11 +10,12 @@ os.makedirs(output_dir, exist_ok=True)
 
 for file in source_files:
     if os.path.exists(file):
+        print(f"Attempting to convert {file}...")
         try:
             convert(file, output_dir)
-            print(f"✅ Conversion successful: {file}")
+            print(f"Conversion successful: {file}")
         except Exception as e:
-            print(f"❌ Error during conversion: {e}")
+            print(f"Error during conversion: {e}")
     else:
         print(f"File not found: {file}")
 
