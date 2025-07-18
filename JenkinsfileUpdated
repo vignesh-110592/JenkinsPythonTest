@@ -13,11 +13,6 @@ pipeline {
     }
 
     stages {
-        stage('Checkout SCM') {
-            steps {
-                checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/vignesh-110592/JenkinsPythonTest.git']])
-            }
-        }
 
         stage('Build Docker Image') {
             steps {
