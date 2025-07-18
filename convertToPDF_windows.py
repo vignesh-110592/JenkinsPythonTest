@@ -10,7 +10,13 @@ os.makedirs(output_dir, exist_ok=True)
 
 for file in source_files:
     if os.path.exists(file):
-        print(f"Converting {file} to PDF...")
-        convert(file, output_dir)
+        try:
+            convert(file, output_dir)
+            print(f"✅ Conversion successful: {file}")
+        except Exception as e:
+            print(f"❌ Error during conversion: {e}")
     else:
         print(f"File not found: {file}")
+
+
+
