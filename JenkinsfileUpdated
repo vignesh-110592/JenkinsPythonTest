@@ -5,6 +5,7 @@ pipeline {
         string(name: 'Company_name', defaultValue: 'Alten GmbH', description: 'Company Name')
         string(name: 'Person_name', defaultValue: 'geehrte', description: 'Person Name')
         string(name: 'Position_name', defaultValue: 'DevOps Engineer', description: 'Position')
+        booleanParam(name: 'REBUILD_IMAGE', defaultValue: false, description: 'Force Docker image rebuild?')
     }
 
     environment {
@@ -15,6 +16,11 @@ pipeline {
     stages {
 
         stage('Build Docker Image') {
+            when {
+                expression {
+                    return params.REBUILD_IMAGE == true
+                }
+            }
             steps {
                 script {
                     bat """
