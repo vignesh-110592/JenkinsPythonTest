@@ -57,17 +57,19 @@ pipeline {
                 }
             }
         }
+        stage('Install Python Requirements') {
+            steps {
+                bat """
+                    pip install --upgrade pip
+                    pip install docx2pdf
+                """
+            }
+}
         stage('Convert to PDF') {
             steps {
-                script {
-                    bat """
-                        docker run --rm ^
-                            -v "%WORKSPACE_DIR%:/app" ^
-                            -w /app ^
-                            %IMAGE_NAME% ^
-                            python convert_docx_to_pdf.py
-                    """
-                }
+                bat """
+                    python convertToPDF_windows.py
+                """
             }
         }
     }
