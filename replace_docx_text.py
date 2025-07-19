@@ -46,9 +46,20 @@ if __name__ == "__main__":
     process_file(os.path.join(base_path, "AnschreibenRaw.docx"),
                  os.path.join(base_path, "Anschreiben.docx"),
                  replacements_anschreiben)
-
-    process_file(os.path.join(base_path, "LebenslaufRaw.docx"),
+    
+    # Process Lebenslauf if needed
+    modified_timestamp = os.path.getmtime("Lebenslauf.docx")
+    modified_date = datetime.datetime.fromtimestamp(modified_timestamp).date()
+    print(modified_date)
+    # Compare dates
+    if modified_date == current_date:
+        print(f"File 'Lebenslauf.docx' was modified today.")
+    else:
+        print(f"File 'Lebenslauf.docx' was last modified on {modified_date.strftime('%d.%m.%Y')}")
+        process_file(os.path.join(base_path, "LebenslaufRaw.docx"),
                  os.path.join(base_path, "Lebenslauf.docx"),
                  replacements_lebenslauf)
+
+    
 
     print("Replacement complete.")
