@@ -9,17 +9,26 @@ output_dir = "C:\\Users\\svvav\\Desktop\\Doc"
 
 os.makedirs(output_dir, exist_ok=True)
 current_date = datetime.today().strftime("%d.%m.%Y")
-modified_timestamp = os.path.getmtime("Lebenslauf.docx")
+modified_timestamp = os.path.getmtime(os.path.join(output_dir, "Lebenslauf.pdf"))
 modified_date = datetime.fromtimestamp(modified_timestamp).strftime("%d.%m.%Y")
+print(modified_date)
 
-for file in source_files:
+for file in source_files:   
     if os.path.exists(file):
 
-        if modified_date == current_date and file == "Lebenslauf.docx":
-            print(f"File '{file}' was modified today. Skipping conversion.")
-            continue
+        if file == "Lebenslauf.docx":
+            if modified_date == current_date :
+                print(f"File Lebenslauf.pdf was modified today. Skipping conversion.")
+                continue
+            else:
+                print(f"File Lebenslauf.pdf was last modified on {modified_date}. Attempting to convert {file}...")
+                try:
+                    convert(file, output_dir)
+                    print(f"Conversion successful: {file}")
+                except Exception as e:
+                    print(f"Error during conversion: {e}")
         else:
-            print(f"File '{file}' was last modified on {modified_date}. Attempting to convert {file}...")
+            print(f"Attempting to convert {file}...")
             try:
                 convert(file, output_dir)
                 print(f"Conversion successful: {file}")
