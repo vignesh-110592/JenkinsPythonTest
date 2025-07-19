@@ -11,7 +11,7 @@ os.makedirs(output_dir, exist_ok=True)
 current_date = datetime.today().strftime("%d.%m.%Y")
 modified_timestamp = os.path.getmtime(os.path.join(output_dir, "Lebenslauf.pdf"))
 modified_date = datetime.fromtimestamp(modified_timestamp).strftime("%d.%m.%Y")
-print(modified_date)
+#print(modified_date)
 
 for file in source_files:   
     if os.path.exists(file):
