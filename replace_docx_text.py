@@ -49,7 +49,7 @@ if __name__ == "__main__":
     
     # Process Lebenslauf if needed
     modified_timestamp = os.path.getmtime("Lebenslauf.docx")
-    modified_date = datetime.datetime.fromtimestamp(modified_timestamp).date()
+    modified_date = datetime.fromtimestamp(modified_timestamp).date()
     print(modified_date)
     # Compare dates
     if modified_date == current_date:
