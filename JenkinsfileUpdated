@@ -2,8 +2,8 @@ pipeline {
     agent any
 
     parameters {
-        string(name: 'Company_name', defaultValue: 'Alten GmbH', description: 'Company Name')
-        string(name: 'Person_name', defaultValue: 'geehrte', description: 'Person Name')
+        string(name: 'Company_name', defaultValue: 'ncsolution GmbH', description: 'Company Name')
+        string(name: 'Person_name', defaultValue: 'geehrte Frau Dominique Kampe-Domjan', description: 'Person Name')
         string(name: 'Position_name', defaultValue: 'DevOps Engineer', description: 'Position')
         booleanParam(name: 'REBUILD_IMAGE', defaultValue: false, description: 'Force Docker image rebuild?')
     }
