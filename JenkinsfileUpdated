@@ -15,7 +15,7 @@ pipeline {
         string(name: 'Custom_Position_name', defaultValue: '', description: 'Enter custom job role if not listed')
         
         //string(name: 'Custom_Greeting', defaultValue: '', description: 'Enter custom greeting if not listed')
-        booleanParam(name: 'REBUILD_IMAGE', defaultValue: false, description: 'Force Docker image rebuild?')
+        booleanParam(name: 'REBUILD_IMAGE', defaultValue: true, description: 'Force Docker image rebuild?')
     }
 
     environment {
