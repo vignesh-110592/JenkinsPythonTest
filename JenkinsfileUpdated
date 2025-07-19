@@ -3,8 +3,12 @@ pipeline {
 
     parameters {
         string(name: 'Company_name', defaultValue: 'ncsolution GmbH', description: 'Company Name')
-        string(name: 'Person_name', defaultValue: 'geehrte Frau Dominique Kampe-Domjan', description: 'Person Name')
-        string(name: 'Position_name', defaultValue: 'DevOps Engineer', description: 'Position')
+        string(name: 'Person_name', defaultValue: 'geehrte ', description: 'Person Name')
+        choice(
+            name: 'Position_name', 
+            choices: ['DevOps Engineer', 'DevOps Specialist', 'Cloud Engineer', 'DevOps Architekt', 'Softwareentwickler DevOps', 'Other'], 
+            description: 'Select job role')
+        string(name: 'Custom_Position_name', defaultValue: 'DevOps Engineer', description: 'Enter custom job role if not listed')
         booleanParam(name: 'REBUILD_IMAGE', defaultValue: false, description: 'Force Docker image rebuild?')
     }
 
@@ -14,6 +18,19 @@ pipeline {
     }
 
     stages {
+        stage('Determine Role') {
+            steps {
+                script {
+                    // Use custom input if 'Other' is selected
+                    finalRole = (params.Position_name == 'Other') ? params.Custom_Position_name : params.Position_name
+
+                    if (!finalRole?.trim()) {
+                        error("No job role provided. Please select or enter a role.")
+                    }
+
+                    echo "Final job role selected: ${finalRole}"
+                }
+            }
 
         stage('Build Docker Image') {
             when {
@@ -38,7 +55,7 @@ pipeline {
                             -v "%WORKSPACE_DIR%:/app" ^
                             -w /app ^
                             %IMAGE_NAME% ^
-                            python replace_docx_text.py "%COMPANY_NAME%" "%PERSON_NAME%" "%POSITION_NAME%"
+                            python replace_docx_text.py "%COMPANY_NAME%" "%PERSON_NAME%" "${finalRole}"
                     """
                 }
             }
@@ -52,7 +69,7 @@ pipeline {
                             -v "%WORKSPACE_DIR%:/app" ^
                             -w /app ^
                             %IMAGE_NAME% ^
-                            python verify_docx_text.py "%COMPANY_NAME%" "%PERSON_NAME%" "%POSITION_NAME%"
+                            python verify_docx_text.py "%COMPANY_NAME%" "%PERSON_NAME%" "${finalRole}"
                     """
                 }
             }
