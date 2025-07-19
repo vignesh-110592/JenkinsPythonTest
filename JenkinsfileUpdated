@@ -3,12 +3,18 @@ pipeline {
 
     parameters {
         string(name: 'Company_name', defaultValue: 'ncsolution GmbH', description: 'Company Name')
+        choice(
+            name: 'Greeting', 
+            choices: ['Sehr geehrte Frau', 'Sehr geehrter Herr', 'Sehr geehrte Damen und Herren'], 
+            description: 'Select greeting')
         string(name: 'Person_name', defaultValue: 'geehrte ', description: 'Person Name')
         choice(
             name: 'Position_name', 
             choices: ['DevOps Engineer', 'DevOps Specialist', 'Cloud Engineer', 'DevOps Architekt', 'Softwareentwickler DevOps', 'Other'], 
             description: 'Select job role')
         string(name: 'Custom_Position_name', defaultValue: '', description: 'Enter custom job role if not listed')
+        
+        //string(name: 'Custom_Greeting', defaultValue: '', description: 'Enter custom greeting if not listed')
         booleanParam(name: 'REBUILD_IMAGE', defaultValue: false, description: 'Force Docker image rebuild?')
     }
 
@@ -32,6 +38,20 @@ pipeline {
                 }
             }
         }
+        /*stage('Determine Greeting') {
+            steps {
+                script {
+                    // Use custom input if 'Other' is selected
+                    finalGreeting = (params.Greeting == 'Other') ? params.Custom_Greeting : params.Greeting
+
+                    if (!finalGreeting?.trim()) {
+                        error("No greeting provided. Please select or enter a greeting.")
+                    }
+
+                    echo "Final greeting selected: ${finalGreeting}"
+                }
+            }
+        }*/
 
         stage('Build Docker Image') {
             when {
@@ -56,7 +76,7 @@ pipeline {
                             -v "%WORKSPACE_DIR%:/app" ^
                             -w /app ^
                             %IMAGE_NAME% ^
-                            python replace_docx_text.py "%COMPANY_NAME%" "%PERSON_NAME%" "${finalRole}"
+                            python replace_docx_text.py "%COMPANY_NAME%" "%Greeting%" "%PERSON_NAME%" "${finalRole}"
                     """
                 }
             }
@@ -70,7 +90,7 @@ pipeline {
                             -v "%WORKSPACE_DIR%:/app" ^
                             -w /app ^
                             %IMAGE_NAME% ^
-                            python verify_docx_text.py "%COMPANY_NAME%" "%PERSON_NAME%" "${finalRole}"
+                            python verify_docx_text.py "%COMPANY_NAME%" "%Greeting%" "%PERSON_NAME%" "${finalRole}"
                     """
                 }
             }

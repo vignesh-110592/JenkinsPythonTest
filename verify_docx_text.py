@@ -13,19 +13,21 @@ def verify_placeholders(doc, expected_values):
     return True
 
 if __name__ == "__main__":
-    if len(sys.argv) != 4:
-        print("Usage: python verify_docx_text.py <CompanyName> <PersonName> <PositionName>")
+    if len(sys.argv) != 5:
+        print("Usage: python verify_docx_text.py <CompanyName> <Greeting> <PersonName> <PositionName>")
         sys.exit(1)
 
     company_name = sys.argv[1]
-    person_name = sys.argv[2]
-    position_name = sys.argv[3]
+    Greeting = sys.argv[2]
+    person_name = sys.argv[3]
+    position_name = sys.argv[4]
 
     current_date = datetime.today().strftime("%d.%m.%Y")
 
     expected_anschreiben = {
         "__DATE__": current_date,
         "Company_name": company_name,
+        "Greeting": Greeting,
         "Person_name": person_name,
         "Position_name": position_name
     }
