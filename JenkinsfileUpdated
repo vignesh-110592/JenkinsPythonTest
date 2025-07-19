@@ -31,6 +31,7 @@ pipeline {
                     echo "Final job role selected: ${finalRole}"
                 }
             }
+        }
 
         stage('Build Docker Image') {
             when {
