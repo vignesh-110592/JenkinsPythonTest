@@ -2,15 +2,17 @@ pipeline {
     agent any
 
     parameters {
-        string(name: 'Company_name', defaultValue: 'ncsolution GmbH', description: 'Company Name')
+        string(name: 'Company_name', defaultValue: 'Ihrem Unternehmen', description: 'Company Name')
         choice(
             name: 'Greeting', 
             choices: ['Sehr geehrte Frau', 'Sehr geehrter Herr', 'Sehr geehrte Damen und Herren'], 
+            defaultValue: 'Sehr geehrte Damen und Herren',
             description: 'Select greeting')
-        string(name: 'Person_name', defaultValue: 'geehrte ', description: 'Person Name')
+        string(name: 'Person_name', defaultValue: '', description: 'Person Name')
         choice(
             name: 'Position_name', 
             choices: ['DevOps Engineer', 'DevOps Specialist', 'Cloud Engineer', 'DevOps Architekt', 'Softwareentwickler DevOps', 'Other'], 
+            defaultValue: 'DevOps Engineer',
             description: 'Select job role')
         string(name: 'Custom_Position_name', defaultValue: '', description: 'Enter custom job role if not listed')
         
