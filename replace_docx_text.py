@@ -50,12 +50,12 @@ if __name__ == "__main__":
     # Process Lebenslauf if needed
     modified_timestamp = os.path.getmtime("Lebenslauf.docx")
     modified_date = datetime.fromtimestamp(modified_timestamp).strftime("%d.%m.%Y")
-    print(modified_date)
+    #print(modified_date)
     # Compare dates
     if modified_date == current_date:
         print(f"File 'Lebenslauf.docx' was modified today. Skipping Lebenslauf processing.")
     else:
-        print(f"File 'Lebenslauf.docx' was last modified on {modified_date} and will be processed.")
+        print(f"File 'Lebenslauf.docx' was last modified on {modified_date}. Processing Lebenslauf.")
         process_file(os.path.join(base_path, "LebenslaufRaw.docx"),
                  os.path.join(base_path, "Lebenslauf.docx"),
                  replacements_lebenslauf)

@@ -43,7 +43,7 @@ if __name__ == "__main__":
 
     if not verify_placeholders(doc1, expected_anschreiben):
         sys.exit(1)
-
+    
     if not verify_placeholders(doc2, expected_lebenslauf):
         sys.exit(1)
 

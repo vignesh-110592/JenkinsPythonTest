@@ -5,7 +5,7 @@ pipeline {
         string(name: 'Company_name', defaultValue: 'Ihrem Unternehmen', description: 'Company Name')
         choice(
             name: 'Greeting', 
-            choices: ['Sehr geehrte Damen und Herren','Sehr geehrte Frau', 'Sehr geehrter Herr'], 
+            choices: ['Sehr geehrte Damen und Herren,','Sehr geehrte Frau ,', 'Sehr geehrter Herr ,'], 
             description: 'Select greeting')
         string(name: 'Person_name', defaultValue: '', description: 'Person Name')
         choice(
@@ -15,7 +15,7 @@ pipeline {
         string(name: 'Custom_Position_name', defaultValue: '', description: 'Enter custom job role if not listed')
         
         //string(name: 'Custom_Greeting', defaultValue: '', description: 'Enter custom greeting if not listed')
-        booleanParam(name: 'REBUILD_IMAGE', defaultValue: true, description: 'Force Docker image rebuild?')
+        booleanParam(name: 'REBUILD_IMAGE', defaultValue: false, description: 'Force Docker image rebuild?')
     }
 
     environment {
