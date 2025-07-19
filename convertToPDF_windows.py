@@ -3,6 +3,7 @@
 from docx2pdf import convert
 from datetime import datetime
 import os
+import sys
 
 source_files = ["Anschreiben.docx", "Lebenslauf.docx"]
 output_dir = "C:\\Users\\svvav\\Desktop\\Doc"
@@ -27,6 +28,7 @@ for file in source_files:
                     print(f"Conversion successful: {file}")
                 except Exception as e:
                     print(f"Error during conversion: {e}")
+                    sys.exit(1)
         else:
             print(f"Attempting to convert {file}...")
             try:
@@ -34,8 +36,10 @@ for file in source_files:
                 print(f"Conversion successful: {file}")
             except Exception as e:
                 print(f"Error during conversion: {e}")
+                sys.exit(1)
     else:
         print(f"File not found: {file}")
+        sys.exit(1)
 
 
 
