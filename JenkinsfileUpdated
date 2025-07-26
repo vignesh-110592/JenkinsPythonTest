@@ -11,7 +11,7 @@ pipeline {
         choice(
             name: 'Position_name', 
             choices: ['DevOps Engineer', 'DevOps Specialist', 'Cloud Engineer', 'DevOps Architekt', 'Softwareentwickler DevOps', 'Other'], 
-            description: 'Select job role')
+            description: 'Select the job role')
         string(name: 'Custom_Position_name', defaultValue: '', description: 'Enter custom job role if not listed')
         
         //string(name: 'Custom_Greeting', defaultValue: '', description: 'Enter custom greeting if not listed')
