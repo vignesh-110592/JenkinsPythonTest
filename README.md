@@ -1,1 +1,1 @@
-Replace the placeholders like Person, company name, position and date etc in the documents Resume and cover letter using Python, Jenkins pipelines, docker, VSCode, ngrok.
+To automate preparing the resume and cover letter to apply for jobs, replace the placeholders like Person, company name, position and date etc in the documents Resume and cover letter using Python, Jenkins pipelines, docker, VSCode, ngrok.
