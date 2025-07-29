@@ -15,13 +15,13 @@ pipeline {
         string(name: 'Custom_Position_name', defaultValue: '', description: 'Enter custom job role if not listed')
         
         //string(name: 'Custom_Greeting', defaultValue: '', description: 'Enter custom greeting if not listed')
-        booleanParam(name: 'REBUILD_IMAGE', defaultValue: false, description: 'Force Docker image rebuild?')
+        //booleanParam(name: 'REBUILD_IMAGE', defaultValue: false, description: 'Force Docker image rebuild?')
     }
 
-    environment {
-        IMAGE_NAME = 'my-python-script'
+    /*environment {
+        //IMAGE_NAME = 'my-python-script'
         WORKSPACE_DIR = "${env.WORKSPACE}"
-    }
+    }*/
 
     stages {
         stage('Determine Role') {
@@ -51,7 +51,7 @@ pipeline {
                     echo "Final greeting selected: ${finalGreeting}"
                 }
             }
-        }*/
+        }
 
         stage('Build Docker Image') {
             when {
@@ -66,18 +66,18 @@ pipeline {
                     """
                 }
             }
-        }
+        }*/
 
         stage('Update DOCX Files') {
             steps {
                 script {
-                    bat """
-                        docker run --rm ^
-                            -v "%WORKSPACE_DIR%:/app" ^
-                            -w /app ^
-                            %IMAGE_NAME% ^
-                            python replace_docx_text.py "%COMPANY_NAME%" "%Greeting%" "%PERSON_NAME%" "${finalRole}"
-                    """
+                    //bat """
+                      //  docker run --rm ^
+                        //    -v "%WORKSPACE_DIR%:/app" ^
+                          //  -w /app ^
+                            //%IMAGE_NAME% ^
+                            bat "python replace_docx_text.py "%COMPANY_NAME%" "%Greeting%" "%PERSON_NAME%" "${finalRole}""
+                    //"""
                 }
             }
         }
@@ -85,11 +85,12 @@ pipeline {
         stage('Verify Updates') {
             steps {
                 script {
-                    bat """
-                        docker run --rm ^
+                    //bat """
+                        /*  docker run --rm ^
                             -v "%WORKSPACE_DIR%:/app" ^
                             -w /app ^
-                            %IMAGE_NAME% ^
+                            %IMAGE_NAME% ^*/
+                    bat """
                             python verify_docx_text.py "%COMPANY_NAME%" "%Greeting%" "%PERSON_NAME%" "${finalRole}"
                     """
                 }
