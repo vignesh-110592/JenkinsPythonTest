@@ -50,9 +50,10 @@ if __name__ == "__main__":
                  replacements_anschreiben)
     
     # Process Lebenslauf if needed
+    print(os.path)
     modified_timestamp = os.path.getmtime("Lebenslauf.docx")
     modified_date = datetime.fromtimestamp(modified_timestamp).strftime("%d.%m.%Y")
-    #print(modified_date)
+    print(modified_date)
     # Compare dates
     if modified_date == current_date:
         print(f"File 'Lebenslauf.docx' was modified today. Skipping Lebenslauf processing.")
