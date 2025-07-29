@@ -51,7 +51,7 @@ if __name__ == "__main__":
     
     # Process Lebenslauf if needed
     print(os.path)
-    modified_timestamp = os.path.getmtime("Lebenslauf.docx")
+    modified_timestamp = os.path.getmtime(os.path.join(repodir, "output/Lebenslauf.docx"))
     modified_date = datetime.fromtimestamp(modified_timestamp).strftime("%d.%m.%Y")
     print(modified_date)
     # Compare dates
