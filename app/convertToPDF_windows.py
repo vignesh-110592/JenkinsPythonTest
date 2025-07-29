@@ -27,7 +27,7 @@ for file in source_files:
             else:
                 print(f"File Lebenslauf.pdf was last modified on {modified_date}. Attempting to convert {file}...")
                 try:
-                    convert(file, output_dir)
+                    convert(file_path, output_dir)
                     print(f"Conversion successful: {file}")
                 except Exception as e:
                     print(f"Error during conversion: {e}")
@@ -35,7 +35,7 @@ for file in source_files:
         else:
             print(f"Attempting to convert {file}...")
             try:
-                convert(file, output_dir)
+                convert(file_path, output_dir)
                 print(f"Conversion successful: {file}")
             except Exception as e:
                 print(f"Error during conversion: {e}")
