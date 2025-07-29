@@ -77,7 +77,7 @@ pipeline {
                           //  -w /app ^
                             //%IMAGE_NAME% ^
 
-                    bat 'python replace_docx_text.py "%COMPANY_NAME%" "%Greeting%" "%PERSON_NAME%" "${finalRole}"'
+                    bat 'python replace_docx_text.py "%COMPANY_NAME%" "%Greeting%" "%PERSON_NAME%" "%finalRole%"'
 
                 }
             }
@@ -91,18 +91,15 @@ pipeline {
                             -v "%WORKSPACE_DIR%:/app" ^
                             -w /app ^
                             %IMAGE_NAME% ^*/
-                    bat """
-                            python verify_docx_text.py "%COMPANY_NAME%" "%Greeting%" "%PERSON_NAME%" "${finalRole}"
-                    """
+                    bat 'python verify_docx_text.py "%COMPANY_NAME%" "%Greeting%" "%PERSON_NAME%" "%finalRole%"'
+
                 }
             }
         }
         
         stage('Convert to PDF') {
             steps {
-                bat """
-                    python convertToPDF_windows.py
-                """
+                bat 'python convertToPDF_windows.py'
             }
         }
     }
