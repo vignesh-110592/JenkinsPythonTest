@@ -38,9 +38,9 @@ if __name__ == "__main__":
     }
     repodir= dirname(dirname(__file__))
     #base_path = os.getcwd()
-
-    doc1 = Document(os.path.join(repodir, "output/Anschreiben.docx"))
-    doc2 = Document(os.path.join(repodir, "output/Lebenslauf.docx"))
+    outdir = os.path.join(repodir, "output")
+    doc1 = Document(os.path.join(outdir, "Anschreiben.docx"))
+    doc2 = Document(os.path.join(outdir, "Lebenslauf.docx"))
 
     if not verify_placeholders(doc1, expected_anschreiben):
         sys.exit(1)
