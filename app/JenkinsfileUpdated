@@ -10,9 +10,9 @@ pipeline {
         string(name: 'Person_name', defaultValue: '', description: 'Person Name')
         choice(
             name: 'Position_name', 
-            choices: ['DevOps Engineer', 'DevOps Specialist', 'Cloud Engineer', 'DevOps Architekt', 'Softwareentwickler DevOps', 'Other'], 
+            choices: ['DevOps Engineer', 'DevOps Specialist', 'Cloud Engineer', 'DevOps Architekt', 'Softwareentwickler DevOps','System Engineer','Support Engineer','Performance Engineer', 'Other'], 
             description: 'Select the job role')
-        string(name: 'Custom_Position_name', defaultValue: '', description: 'Enter custom job role if not listed')
+        string(name: 'Custom_Position_name', defaultValue: 'DevOps Engineer', description: 'Enter custom job role if not listed')
         
         //string(name: 'Custom_Greeting', defaultValue: '', description: 'Enter custom greeting if not listed')
         //booleanParam(name: 'REBUILD_IMAGE', defaultValue: false, description: 'Force Docker image rebuild?')
