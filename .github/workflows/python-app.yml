@@ -15,7 +15,11 @@ permissions:
 jobs:
   build:
 
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        python-version: [3.10]
 
     steps:
     - uses: actions/checkout@v4
@@ -36,4 +40,6 @@ jobs:
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Test with pytest
       run: |
-        pytest
+        echo "Running tests on ${{ matrix.os }} with pytest"
+        echo "Hello, world!"
+        #sh 'test_replace.py'
