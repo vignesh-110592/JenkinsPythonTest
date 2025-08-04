@@ -50,4 +50,4 @@ jobs:
     - name: Test with pytest
       run: |
         echo "Running tests on ${{ matrix.os }} with pytest"
-        pytest test/
+        pytest tests/
