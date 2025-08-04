@@ -50,15 +50,16 @@ if __name__ == "__main__":
                  replacements_anschreiben)
     
     # Process Lebenslauf if needed
-    #print(os.path)
+    print(os.path)
+    modified_timestamp = os.path.getmtime(os.path.join("C:\\Users\\svvav\\Desktop\\Doc", "Lebenslauf.pdf"))
     #modified_timestamp = os.path.getmtime(os.path.join(repodir, "output/Lebenslauf.docx"))
-    #modified_date = datetime.fromtimestamp(modified_timestamp).strftime("%d.%m.%Y")
-    #print(modified_date)
+    modified_date = datetime.fromtimestamp(modified_timestamp).strftime("%d.%m.%Y")
+    print(modified_date)
     # Compare dates
-    #if modified_date == current_date:
-       #print(f"File 'Lebenslauf.docx' was modified today. Skipping Lebenslauf processing.")
-    #else:
-        #print(f"File 'Lebenslauf.docx' was last modified on {modified_date}. Processing Lebenslauf.")
+    if modified_date == current_date:
+       print(f"File 'Lebenslauf.docx' was modified today. Skipping Lebenslauf processing.")
+    else:
+        print(f"File 'Lebenslauf.docx' was last modified on {modified_date}. Processing Lebenslauf.")
     process_file(os.path.join(repodir, "input/LebenslaufRaw.docx"),
                  os.path.join(repodir, "output/Lebenslauf.docx"),
                  replacements_lebenslauf)
