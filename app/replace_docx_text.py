@@ -60,7 +60,7 @@ if __name__ == "__main__":
        print(f"File 'Lebenslauf.docx' was modified today. Skipping Lebenslauf processing.")
     else:
         print(f"File 'Lebenslauf.docx' was last modified on {modified_date}. Processing Lebenslauf.")
-    process_file(os.path.join(repodir, "input/LebenslaufRaw.docx"),
+        process_file(os.path.join(repodir, "input/LebenslaufRaw.docx"),
                  os.path.join(repodir, "output/Lebenslauf.docx"),
                  replacements_lebenslauf)
 
