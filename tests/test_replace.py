@@ -35,7 +35,7 @@ def test_replace_script_with_args():
     script_dir.mkdir()
     script_path = script_dir / "replace_docx_text.py"
 
-    original_script = Path("replace_docx_text.py").read_text()
+    original_script = Path("app/replace_docx_text.py").read_text()
     # Patch __file__-based repo path resolution for testability
     patched_script = original_script.replace("dirname(dirname(__file__))", f'"{temp_root}"')
     script_path.write_text(patched_script)
