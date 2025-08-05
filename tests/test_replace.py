@@ -40,10 +40,11 @@ def test_replace_script_with_args():
     ])
 
     # Copy and patch the original script into app/
+    repo_root_str = str(repo_root).replace("\\", "\\\\")  # Escape backslashes for Windows paths
     original_script = Path("app/replace_docx_text.py").read_text()
     patched_script = original_script.replace(
         "dirname(dirname(__file__))",
-        f'"{str(repo_root)}"'
+        f'r"{repo_root_str}"'
     )
     script_path = app_dir / "replace_docx_text.py"
     script_path.write_text(patched_script)
