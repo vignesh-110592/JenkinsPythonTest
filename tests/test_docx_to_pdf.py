@@ -1,35 +1,49 @@
-import os
+import subprocess
 import sys
-import tempfile
 import shutil
-import platform
 import pytest
 from pathlib import Path
 from docx import Document
 
-@pytest.mark.skipif(platform.system() == "Linux", reason="docx2pdf does not support Linux")
-def test_docx_to_pdf_cross_platform():
-    try:
-        from docx2pdf import convert
-    except ImportError:
-        pytest.fail("docx2pdf is not installed")
 
-    # Create a temporary workspace
-    temp_dir = Path(tempfile.mkdtemp())
-    docx_file = temp_dir / "sample.docx"
-    pdf_file = temp_dir / "sample.pdf"
+def convert_with_libreoffice(input_path: Path, output_dir: Path):
+    # Ensure soffice is available
+    soffice_path = shutil.which("soffice")
+    if not soffice_path:
+        raise FileNotFoundError("LibreOffice (soffice) is not installed or not in PATH.")
 
-    # Step 1: Create a sample DOCX file
+    # Run the conversion
+    result = subprocess.run(
+        [
+            soffice_path,
+            "--headless",
+            "--convert-to", "pdf",
+            "--outdir", str(output_dir),
+            str(input_path)
+        ],
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE
+    )
+
+    if result.returncode != 0:
+        raise RuntimeError(f"LibreOffice conversion failed:\n{result.stderr.decode()}")
+
+    # Return path to output PDF
+    return output_dir / (input_path.stem + ".pdf")
+
+
+@pytest.mark.skipif(shutil.which("soffice") is None, reason="LibreOffice is not installed")
+def test_docx_to_pdf_libreoffice(tmp_path):
+    # Create DOCX file
+    docx_path = tmp_path / "sample.docx"
+    pdf_path = tmp_path / "sample.pdf"
+
     doc = Document()
-    doc.add_paragraph("Hello world from test_docx_to_pdf")
-    doc.save(docx_file)
+    doc.add_paragraph("This is a test document.")
+    doc.save(docx_path)
 
-    # Step 2: Convert DOCX to PDF
-    convert(str(docx_file), str(pdf_file))
+    # Convert to PDF
+    output_pdf = convert_with_libreoffice(docx_path, tmp_path)
 
-    # Step 3: Assert the PDF file exists and is non-empty
-    assert pdf_file.exists(), "PDF file was not created"
-    assert pdf_file.stat().st_size > 0, "PDF file is empty"
-
-    # Clean up
-    shutil.rmtree(temp_dir)
+    # Assert file was created
+    assert output_pdf.exists(), f"PDF was not created: expected at {output_pdf}"
