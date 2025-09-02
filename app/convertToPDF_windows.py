@@ -7,7 +7,8 @@ import sys
 from os.path import dirname
 
 source_files = ["Anschreiben.docx", "Lebenslauf.docx"]
-output_dir = "/home/ubuntu/Documents/"
+output_dir = "/var/lib/jenkins/workspace/ResumeAndCoverLetter/output/"
+
 
 os.makedirs(output_dir, exist_ok=True)
 current_date = datetime.today().strftime("%d.%m.%Y")
