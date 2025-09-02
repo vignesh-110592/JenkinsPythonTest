@@ -104,7 +104,7 @@ pipeline {
         stage('Convert to PDF') {
             steps {
                 sh """
-                /var/lib/jenkins/ansible-venv/bin/python3 app/convertToPDF_windows.py
+                /var/lib/jenkins/ansible-venv/bin/python3 app/convertToPDF_Linux.py
                 """
             }
         }
