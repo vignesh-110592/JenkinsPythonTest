@@ -78,8 +78,7 @@ pipeline {
                             //%IMAGE_NAME% ^
 
                     sh """
-                    source ~/ansible-venv/bin/activate
-                    python3 app/replace_docx_text.py "%COMPANY_NAME%" "%Greeting%" "%PERSON_NAME%" "${finalRole}" 
+                    /var/lib/jenkins/ansible-venv/bin/python3 app/replace_docx_text.py "%COMPANY_NAME%" "%Greeting%" "%PERSON_NAME%" "${finalRole}" 
                     """
 
                 }
@@ -95,8 +94,7 @@ pipeline {
                             -w /app ^
                             %IMAGE_NAME% ^*/
                     sh """
-                    source ~/ansible-venv/bin/activate
-                    python3 app/verify_docx_text.py "%COMPANY_NAME%" "%Greeting%" "%PERSON_NAME%" "${finalRole}" 
+                    /var/lib/jenkins/ansible-venv/bin/python3 app/verify_docx_text.py "%COMPANY_NAME%" "%Greeting%" "%PERSON_NAME%" "${finalRole}" 
                     """
 
                 }
@@ -106,8 +104,7 @@ pipeline {
         stage('Convert to PDF') {
             steps {
                 sh """
-                source ~/ansible-venv/bin/activate
-                python3 app/convertToPDF_windows.py
+                /var/lib/jenkins/ansible-venv/bin/python3 app/convertToPDF_windows.py
                 """
             }
         }
