@@ -7,7 +7,7 @@ import sys
 from os.path import dirname
 
 source_files = ["Anschreiben.docx", "Lebenslauf.docx"]
-output_dir = "C:\\Users\\svvav\\Desktop\\Doc"
+output_dir = "/home/ubuntu/Documents/"
 
 os.makedirs(output_dir, exist_ok=True)
 current_date = datetime.today().strftime("%d.%m.%Y")
