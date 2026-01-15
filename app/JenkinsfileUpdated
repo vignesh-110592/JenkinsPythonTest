@@ -77,10 +77,7 @@ pipeline {
                           //  -w /app ^
                             //%IMAGE_NAME% ^
 
-                    bat """
-                        where python
-                        python -m pip list
-                        python app/replace_docx_text.py "%COMPANY_NAME%" "%Greeting%" "%PERSON_NAME%" "${finalRole}" """
+                    bat """python app/replace_docx_text.py "%COMPANY_NAME%" "%Greeting%" "%PERSON_NAME%" "${finalRole}" """
 
                 }
             }
