@@ -10,3 +10,5 @@
 1. Run replace_docx_text.py using subprocess with arguments.
 
 1. Validate that the outputs are created and content is replaced correctly.
+
+Github Action Workflow status badge: ![Python application](https://github.com/vignesh-110592/JenkinsPythonTest/actions/workflows/python-app.yml/badge.svg)
