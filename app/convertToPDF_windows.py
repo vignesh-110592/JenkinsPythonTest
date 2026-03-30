@@ -5,6 +5,7 @@ from datetime import datetime
 import os
 import sys
 from os.path import dirname
+import shutil
 
 source_files = ["Anschreiben.docx", "Lebenslauf.docx"]
 output_dir = "C:\\Users\\vigne\\Desktop\\Doc"
@@ -29,6 +30,10 @@ for file in source_files:
                 try:
                     convert(file_path, output_dir)
                     print(f"Conversion successful: {file}")
+                    source = os.path.join(output_dir, "Lebenslauf.pdf")
+                    dest_folder = r"S:\GitHubProjects\my-portfolio\public"
+                    dest = os.path.join(dest_folder, os.path.basename(source))
+                    shutil.copy2(source,dest)
                 except Exception as e:
                     print(f"Error during conversion: {e}")
                     sys.exit(1)
